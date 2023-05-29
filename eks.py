@@ -1,12 +1,14 @@
+# Import the necessary modules from the Kubernetes Python client library.
 from kubernetes import client, config
 
-# Load Kubernetes configuration
+# Load Kubernetes configuration from the default location (kubeconfig file).
 config.load_kube_config()
 
-# Create a Kubernetes API client
+# Create a Kubernetes API client, to allow us to interact with the Kubernetes API.
 api_client = client.ApiClient()
 
-# Define the deployment
+# Define the deployment using the 'V1Deployment' class from the Kubernetes Python client library.
+# It specifies the desired state of the deployment.
 deployment = client.V1Deployment(
     metadata=client.V1ObjectMeta(name="my-flask-app"),
     spec=client.V1DeploymentSpec(
@@ -31,14 +33,14 @@ deployment = client.V1Deployment(
     )
 )
 
-# Create the deployment
+# Create the deployment.
 api_instance = client.AppsV1Api(api_client)
 api_instance.create_namespaced_deployment(
     namespace="default",
     body=deployment
 )
 
-# Define the service
+# Define the service that provides a stable network endpoint (port) to access a group of pods. 
 service = client.V1Service(
     metadata=client.V1ObjectMeta(name="my-flask-service"),
     spec=client.V1ServiceSpec(
@@ -47,7 +49,7 @@ service = client.V1Service(
     )
 )
 
-# Create the service
+# Create the service. 
 api_instance = client.CoreV1Api(api_client)
 api_instance.create_namespaced_service(
     namespace="default",
