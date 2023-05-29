@@ -15,17 +15,18 @@
 <body>
     <div class="container">
         <h1>System Monitoring</h1>
-        <div id="cpu-gauge"></div>
-        <div id="mem-gauge"></div>
+        <div id="cpu-gauge"></div> <!-- CPU gauge chart -->
+        <div id="mem-gauge"></div> <!-- Memory gauge chart -->
         {% if message %}
         <div class="alert alert-danger">{{ message }}</div>
         {% endif %}
     </div>
     <script>
+        // Configuration for CPU gauge chart
         var cpuGauge = {
             type: "indicator",
             mode: "gauge+number",
-            value: {{ cpu_percent }},
+            value: {{ cpu_percent }}, // CPU utilization value (dynamic)
             gauge: {
                 axis: { range: [null, 100] },
                 bar: { color: "#1f77b4" },
@@ -40,15 +41,16 @@
                 threshold: {
                     line: { color: "red", width: 4 },
                     thickness: 0.75,
-                    value: {{ cpu_percent }}
+                    value: {{ cpu_percent }} // CPU utilization threshold (dynamic)
                 }
             }
         };
         
+        // Configuration for memory gauge chart
         var memGauge = {
             type: "indicator",
             mode: "gauge+number",
-            value: {{ memory_percent }},
+            value: {{ memory_percent }}, // Memory utilization value (dynamic)
             gauge: {
                 axis: { range: [null, 100] },
                 bar: { color: "#1f77b4" },
@@ -63,16 +65,16 @@
                 threshold: {
                     line: { color: "red", width: 4 },
                     thickness: 0.75,
-                    value: {{ memory_percent }}
+                    value: {{ memory_percent }} // Memory utilization threshold (dynamic)
                 }
             }
         };
         
-        var cpuGaugeLayout = { title: "CPU Utilization" };
-        var memGaugeLayout = { title: "Memory Utilization" };
+        var cpuGaugeLayout = { title: "CPU Utilization" }; // Title for CPU gauge chart
+        var memGaugeLayout = { title: "Memory Utilization" }; // Title for memory gauge chart
         
-        Plotly.newPlot('cpu-gauge', [cpuGauge], cpuGaugeLayout);
-        Plotly.newPlot('mem-gauge', [memGauge], memGaugeLayout);
+        Plotly.newPlot('cpu-gauge', [cpuGauge], cpuGaugeLayout); // Render CPU gauge chart
+        Plotly.newPlot('mem-gauge', [memGauge], memGaugeLayout); // Render memory gauge chart
     </script>
 </body>
 </html>
